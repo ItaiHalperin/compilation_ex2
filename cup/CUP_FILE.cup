@@ -35,6 +35,7 @@ scan with
 	Symbol s;
 	s = lexer.next_token();
 	//System.out.print(s.sym);
+	//Block for debug - delete later -----------------------------------------
 	System.out.print("[");
 	System.out.print(lexer.getLine());
 	System.out.print(":");
@@ -48,6 +49,7 @@ scan with
 		System.out.print(" )");
 	}
 	System.out.print("\n");
+	//-------------------------------------------------------------------------
 	return s; 
 :};
 
