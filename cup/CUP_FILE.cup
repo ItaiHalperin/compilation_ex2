@@ -3,24 +3,26 @@
 /*************/
 import java_cup.runtime.*;
 import ast.*;
+import java.io.PrintWriter;
 
 parser code 
 {:
 	public Lexer lexer;
+	public PrintWriter writer;
 
-	public Parser(Lexer lexer)
+	public Parser(Lexer lexer, PrintWriter writer)
 	{
 		super(lexer);
 		this.lexer = lexer;
+		this.writer = writer;
 	}
 	public void report_error(String message, Object info)
 	{
-		System.out.print("ERROR >> ");		
-		System.out.print("[");
-		System.out.print(lexer.getLine());
-		System.out.print(":");
-		System.out.print(lexer.getTokenStartPosition());
-		System.out.print("] ");		
+		
+	}
+	public void syntax_error(Symbol curr_token){
+		writer.print("ERROR(" +curr_token.left+")");
+		writer.close();
 		System.exit(0);
 	}
 :}

@@ -3,10 +3,16 @@ import java.io.PrintWriter;
 import java_cup.runtime.Symbol;
 import ast.*;
 
+
 public class Main
 {
 	static public void main(String argv[])
 	{
+		if (argv.length != 2) {
+			System.err.println("Usage: java Main <input file> <output file>");
+			System.exit(1);
+		}
+
 		Lexer l;
 		Parser p;
 		Symbol s;
@@ -36,7 +42,7 @@ public class Main
 			/*******************************/
 			/* [4] Initialize a new parser */
 			/*******************************/
-			p = new Parser(l);
+			p = new Parser(l, fileWriter);
 
 			/***********************************/
 			/* [5] 3 ... 2 ... 1 ... Parse !!! */
@@ -47,6 +53,11 @@ public class Main
 			/* [6] Print the AST ... */
 			/*************************/
 			ast.printMe();
+
+			/*************************/
+			/* [6.5] Write Ok msg... */
+			/*************************/
+			fileWriter.write("OK");
 			
 			/*************************/
 			/* [7] Close output file */
