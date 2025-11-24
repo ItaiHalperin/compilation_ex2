@@ -7,8 +7,9 @@ public class AstExpInt extends AstExp
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstExpInt(int value)
+	public AstExpInt(int value, int lineNumber)
 	{
+		super(lineNumber);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/

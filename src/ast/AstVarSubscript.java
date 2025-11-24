@@ -8,8 +8,10 @@ public class AstVarSubscript extends AstVar
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstVarSubscript(AstVar var, AstExp subscript)
+	public AstVarSubscript(AstVar var, AstExp subscript, int lineNumber)
 	{
+		super(lineNumber);
+	
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
