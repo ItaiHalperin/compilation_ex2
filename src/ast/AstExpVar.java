@@ -7,8 +7,10 @@ public class AstExpVar extends AstExp
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstExpVar(AstVar var)
+	public AstExpVar(AstVar var, int lineNumber)
 	{
+		super(lineNumber);
+	
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/

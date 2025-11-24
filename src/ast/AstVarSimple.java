@@ -5,13 +5,14 @@ public class AstVarSimple extends AstVar
 	/************************/
 	/* simple variable name */
 	/************************/
+
 	public String name;
-	
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstVarSimple(String name)
+	public AstVarSimple(String name, int lineNumber)
 	{
+		super(lineNumber);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/

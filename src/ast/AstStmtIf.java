@@ -8,9 +8,11 @@ public class AstStmtIf extends AstStmt
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AstStmtIf(AstExp cond, AstStmtList body)
+	public AstStmtIf(AstExp cond, AstStmtList body, int lineNumber)
 	{
+		super(lineNumber);
 		this.cond = cond;
 		this.body = body;
 	}
+
 }
