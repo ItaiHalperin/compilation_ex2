@@ -111,7 +111,9 @@ ID				= [a-zA-Z]+
 ";"					{ return symbol(TokenNames.SEMICOLON);}
 "<"					{return symbol(TokenNames.LT);}
 ">" 				{return symbol(TokenNames.GT);}
-"new"				{return symbol(TokenNames.NEW)}
+"new"				{return symbol(TokenNames.NEW);}
+","					{return symbol(TokenNames.COMMA);}
+"nil"				{return symbol(TokenNames.NIL);}
 {ID}				{ return symbol(TokenNames.ID, yytext());}
 {INTEGER}			{ return symbol(TokenNames.INT, Integer.valueOf(yytext()));}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }

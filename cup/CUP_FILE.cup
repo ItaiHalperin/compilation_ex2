@@ -71,12 +71,14 @@ terminal RBRACK;
 terminal LBRACE;
 terminal RBRACE;
 terminal SEMICOLON;
+terminal COMMA;
+terminal NIL;
 terminal ASSIGN;
 terminal LT;
 terminal GT; 
 terminal CLASS;
 terminal NEW;
-
+terminal EXTENDS;
 
 /*************/
 /* TERMINALS */
@@ -84,6 +86,9 @@ terminal NEW;
 terminal Integer INT;
 terminal String ID;
 terminal String STRING;
+terminal TYPE_INT;
+terminal TYPE_STRING;
+terminal TYPE_VOID;
 
 /*****************/
 /* NON TERMINALS */
@@ -94,6 +99,7 @@ non terminal AstStmt stmt;
 non terminal AstStmtList stmtList;
 
 non terminal AstProgram program;
+non terminal AstDec dec;
 non terminal AstDecList decList;
 non terminal AstType type;
 non terminal AstVarDec varDec;
@@ -105,6 +111,7 @@ non terminal AstCallExp callExp;
 non terminal AstClassField classField;
 non terminal AstClassFieldList classFieldsList;
 non terminal AstTypeNameList typeNameList;
+non terminal AstExpList expList;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
@@ -136,7 +143,7 @@ program		::=		decList:l		{: RESULT = new AstProgram(l, lleft); :}
 					;
 
 decList		::=		decList:l dec:d		{: l.add(d); RESULT=l; :}
-					| dec:d 			{: RESULT = new AstDecList(d, dleft)}
+					| dec:d 			{: RESULT = new AstDecList(d, dleft);	:}
 					;
 
 dec 		::= 	varDec:v			{: RESULT = v; :}
@@ -169,17 +176,16 @@ typeNameList	::= 	type: t ID:i 		{: RESULT = new AstTypeNameList(t,i,tleft); :}
 						| typeNameList:l COMMA type:t ID:i  {: l.add(t,i); RESULT = l; :}
 						;
 
-classDec	::= 	CLASS ID:i LBRACE classFieldsList:fields RBRACE		{: RESULT = new AstClassDec(i, null, fields, ileft)}
-					| CLASS ID:i EXTENDS IDS:super LBRACE classFieldsList:fields RBRACE	
-						{: RESULT = new AstClassDec(i, super, fields, ileft)}
+classDec	::= 	CLASS ID:i LBRACE classFieldsList:fields RBRACE		{: RESULT = new AstClassDec(i, null, fields, ileft);	:}
+					| CLASS ID:i EXTENDS ID:sup LBRACE classFieldsList:fields RBRACE	{: RESULT = new AstClassDec(i, sup, fields, ileft);	:}
 					;
 
 classFieldsList ::= classField:f			{: RESULT = new AstClassFieldList(f, fleft); :}
 					| classFieldsList:l classField:f  {: l.add(f); RESULT = l; :}
 					;
 
-classField	::= 	varDec:v 				{: RESULT = new AstClassField(v, vleft)}
-					| funcDec:f 			{: RESULT = new AstClassField(f, vleft)}
+classField	::= 	varDec:v 				{: RESULT = new AstClassField(v, vleft);	:}
+					| funcDec:f 			{: RESULT = new AstClassField(f, vleft);	:}
 					;
 
 arrayTypeDef ::= 	ARRAY ID:i EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new AstArrayTypeDef(i,t, ileft); :}
@@ -194,18 +200,44 @@ stmt		::=		varDec:v 													{: RESULT = new AstStmtDec(v, vleft); :}
 					| var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AstStmtAssign(v,e,vleft); :}
 					| var:v ASSIGN newExp:e SEMICOLON							{: RESULT = new AstStmtAssignNew(v,e, vleft); ;}
 					| RETURN exp:e SEMICOLON									{: RESULT = new AstStmtReturn(e, eleft); :}
-					| IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtIf(   cond,body); :}
-					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtWhile(cond,body); :}
+					| IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtIf(   cond,body,condleft); :}
+					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtWhile(cond,body,condleft); :}
+					| callExp:e	SEMICOLON										{: RESULT = new AstStmtCall(e, eleft); :}
 					;
 
-exp			::=		INT:i								{: RESULT = new AstExpInt(i);          :}
-					| var:v								{: RESULT = new AstExpVar(v);          :}
-					| exp:e1 PLUS  exp:e2				{: RESULT = new AstExpBinop(e1, e2, 0);:}
-					| exp:e1 MINUS exp:e2				{: RESULT = new AstExpBinop(e1, e2, 1);:}
+// Expressions  ------------------------------------------------------------
+exp			::=		INT:i								{: RESULT = new AstExpInt(i, ileft);          :}
+					| var:v								{: RESULT = new AstExpVar(v, vleft);          :}
+					| LPAREN exp:e RPAREN				{: RESULT = e; :}
+					| exp:e1 PLUS  exp:e2				{: RESULT = new AstExpBinop(e1, e2, 0, e1left);:}
+					| exp:e1 MINUS exp:e2				{: RESULT = new AstExpBinop(e1, e2, 1,e1left);:}
+					| exp:e1 TIMES exp:e2				{: RESULT = new AstExpBinop(e1, e2, 2,e1left);:}
+					| exp:e1 DIVIDE exp:e2				{: RESULT = new AstExpBinop(e1, e2, 3,e1left);:}
+					| exp:e1 LT exp:e2					{: RESULT = new AstExpBinop(e1, e2, 4,e1left);:}
+					| exp:e1 GT exp:e2					{: RESULT = new AstExpBinop(e1, e2, 5,e1left);:}
+					| exp:e1 EQ exp:e2					{: RESULT = new AstExpBinop(e1, e2, 6,e1left);:}
+					| callExp:e 						{: RESULT = new AstExpCall(e, eleft);:}
+					| MINUS INT:i						{: RESULT = new AstExpInt(-i, ileft);:}
+					| NIL:n								{: RESULT = new AstExpNil(nleft);:}
+					| STRING:s							{: RESULT = new AstExpString(s, sleft);:}
 					;
 
-var			::=		ID:name								{: RESULT = new AstVarSimple(name);       :}
-					| var:v DOT ID:fieldName			{: RESULT = new AstVarField(v,fieldName); :}
-					| var:v LBRACK exp:e RBRACK			{: RESULT = new AstVarSubscript(v,e);     :}
+newExp 		::= 	NEW type:t 							{: RESULT = new AstNewExp(t, null, tleft);	:}
+					| NEW type:t LBRACE exp:e RBRACE	{: RESULT = new AstNewExp(t, e, tleft);	:}
+					;
+
+expList 	::= 	expList:l COMMA exp:e				{: l.add(e); RESULT=l;		:}
+					| exp:e								{: RESULT = new AstExpList(e,eleft);	:}
+					;
+
+callExp		::= 	var:v DOT ID:i LPAREN expList:l RPAREN	{: RESULT = new AstCallExp(v,i,l, vleft);	:}
+					| var:v DOT ID:i LPAREN RPAREN 		{: RESULT = new AstCallExp(v,i,null, vleft);	:}
+					| ID:i LPAREN expList:l RPAREN		{: RESULT = new AstCallExp(null, i, l, ileft); 	:}
+					| ID:i LPAREN RPAREN				{: RESULT = new AstCallExp(null, i, null, ileft);	:}
+					;
+
+var			::=		ID:name								{: RESULT = new AstVarSimple(name, nameleft);       :}
+					| var:v DOT ID:fieldName			{: RESULT = new AstVarField(v,fieldName, vleft); :}
+					| var:v LBRACK exp:e RBRACK			{: RESULT = new AstVarSubscript(v,e, vleft);     :}
 					;
 					
