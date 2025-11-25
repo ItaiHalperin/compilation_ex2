@@ -95,6 +95,13 @@ ID				= [a-zA-Z]+
 <YYINITIAL> {
 
 "if"				{ return symbol(TokenNames.IF);}
+"extendes"			{ return symbol(TokenNames.EXTENDS);}
+"class"				{ return symbol(TokenNames.CLASS);}
+"int"				{ return symbol(TokenNames.TYPE_INT);}
+"string"			{ return symbol(TokenNames.TYPE_STRING);}
+"void"				{ return symbol(TokenNames.TYPE_VOID);}
+"array"				{ return symbol(TokenNames.ARRAY);}
+"return"			{ return symbol(TokenNames.RETURNN);}
 "="					{ return symbol(TokenNames.EQ);}
 "."					{ return symbol(TokenNames.DOT);}
 "+"					{ return symbol(TokenNames.PLUS);}

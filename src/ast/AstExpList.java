@@ -13,7 +13,7 @@ public class AstExpList extends AstNode{
 
     }
     
-    public void addExp(AstExp exp){
+    public void add(AstExp exp){
         exps.add(exp);
     }
 }

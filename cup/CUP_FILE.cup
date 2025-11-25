@@ -79,6 +79,8 @@ terminal GT;
 terminal CLASS;
 terminal NEW;
 terminal EXTENDS;
+terminal ARRAY;
+terminal RETURNN;
 
 /*************/
 /* TERMINALS */
@@ -165,10 +167,10 @@ varDec		::= 	type:t ID:i ASSIGN exp:e SEMICOLON	{: RESULT = new AstVarDec(t,i,e,
 					| type:t ID:i 	{: RESULT = new AstVarDec(t, i, null, tleft); :}
 					;
 
-funcDec		::=		type:t ID:i LPAREN typeNameList:args RPAREN LBRACE stmtList:body RBRACE
-					{: RESULT = new AstFuncDec(t,i,args,body,tleft); :}
+funcDec		::=		type:t ID:i LPAREN typeNameList:l RPAREN LBRACE stmtList:body RBRACE
+					{: RESULT = new AstFuncDec(t,i,l,body,tleft); :}
 					| type:t ID:i LPAREN RPAREN LBRACE stmtList:body RBRACE
-					{: RESULT = new AstFuncDec(t,i,args,body, tleft); :}
+					{: RESULT = new AstFuncDec(t,i,null,body, tleft); :}
 					;
 
 // part of the funcDec
@@ -185,7 +187,7 @@ classFieldsList ::= classField:f			{: RESULT = new AstClassFieldList(f, fleft); 
 					;
 
 classField	::= 	varDec:v 				{: RESULT = new AstClassField(v, vleft);	:}
-					| funcDec:f 			{: RESULT = new AstClassField(f, vleft);	:}
+					| funcDec:f 			{: RESULT = new AstClassField(f, fleft);	:}
 					;
 
 arrayTypeDef ::= 	ARRAY ID:i EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new AstArrayTypeDef(i,t, ileft); :}
@@ -193,13 +195,13 @@ arrayTypeDef ::= 	ARRAY ID:i EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new A
 
 // Statements  ------------------------------------------------------------
 stmtList	::=		stmtList:l	stmt:s		{: l.add(s); RESULT = l;    :}
-					| stmt:s				{: RESULT = new AstStmtList(s,null); :}
+					| stmt:s				{: RESULT = new AstStmtList(s,sleft); :}
 					;
 
 stmt		::=		varDec:v 													{: RESULT = new AstStmtDec(v, vleft); :}
 					| var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AstStmtAssign(v,e,vleft); :}
-					| var:v ASSIGN newExp:e SEMICOLON							{: RESULT = new AstStmtAssignNew(v,e, vleft); ;}
-					| RETURN exp:e SEMICOLON									{: RESULT = new AstStmtReturn(e, eleft); :}
+					| var:v ASSIGN newExp:e SEMICOLON							{: RESULT = new AstStmtAssignNew(v,e, vleft); :}
+					| RETURNN exp:e SEMICOLON									{: RESULT = new AstStmtReturn(e, eleft); :}
 					| IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtIf(   cond,body,condleft); :}
 					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AstStmtWhile(cond,body,condleft); :}
 					| callExp:e	SEMICOLON										{: RESULT = new AstStmtCall(e, eleft); :}

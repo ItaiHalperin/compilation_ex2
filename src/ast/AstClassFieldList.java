@@ -7,7 +7,7 @@ public class AstClassFieldList  extends AstNode  {
 
     public AstClassFieldList(AstClassField classField, int lineNumber) {
         super(lineNumber);
-        classFields.add(classFields);
+        classFields.add(classField);
     }  
 
     public void add(AstClassField field){
