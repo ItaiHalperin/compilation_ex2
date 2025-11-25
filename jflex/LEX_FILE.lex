@@ -74,7 +74,11 @@ import java_cup.runtime.*;
 LineTerminator	= \r|\n|\r\n
 WhiteSpace		= {LineTerminator} | [ \t\f]
 INTEGER			= 0 | [1-9][0-9]*
-ID				= [a-zA-Z]+
+ID				= [a-zA-Z_][a-zA-Z0-9_]*
+
+COMMENT1_CHAR    = [A-Za-z0-9()\[\]\{\}\?\!\+\-\*/\.; \t]
+COMMENT2_CHAR    = [A-Za-z0-9()\[\]\{\}\?\!\+\-\*/\.; \t\n]
+%state COMMENT2
    
 /******************************/
 /* DOLLAR DOLLAR - DON'T TOUCH! */
@@ -93,6 +97,10 @@ ID				= [a-zA-Z]+
 /**************************************************************/
 
 <YYINITIAL> {
+// Type 1 Comments: line comments
+  "//"{COMMENT1_CHAR}*\n      { /* skip line comment */ }
+/* Type 2 Comments: block comment(state def at the bottom) */
+  "/*" { yybegin(COMMENT2); }
 
 "if"				{ return symbol(TokenNames.IF);}
 "extendes"			{ return symbol(TokenNames.EXTENDS);}
@@ -127,4 +135,10 @@ ID				= [a-zA-Z]+
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 {LineTerminator}	{ /* just skip what was found, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF);}
+}
+
+<COMMENT2> {
+  "*/"             { yybegin(YYINITIAL); }
+  {COMMENT2_CHAR}  { /* skip content */ }
+  <<EOF>>          { throw new RuntimeException("lex"); }
 }
