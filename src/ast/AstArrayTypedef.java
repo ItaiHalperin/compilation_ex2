@@ -1,14 +1,13 @@
 package ast;
 
-public class AstStmtWhile extends AstStmt
+public class AstArrayTypedef extends AstDec
 {
-	public AstExp cond;
-	public AstStmtList body;
-
-	/*******************/
-	/*  CONSTRUCTOR(S) */
-	/*******************/
-	public AstStmtWhile(AstExp cond, AstStmtList body, int line_number)
+	public AstType type;
+	
+	/******************/
+	/* CONSTRUCTOR(S) */
+	/******************/
+	public AstArrayTypedef(AstType type, int line_number)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -18,41 +17,41 @@ public class AstStmtWhile extends AstStmt
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== stmt -> WHILE LPAREN exp RPAREN LBRACE stmtList RBRACE\n");
 
+        System.out.print("====================== dec -> ARRAY ID EQ type LBRACK RBRACK SEMICOLON\n");
 
 		/*******************************/
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
-		this.cond = cond;
-		this.body = body;
-		super(line_number);
+        this.type = type;
+        super(line_number);
 	}
+	
+	/*************************************************/
+	/* The printing message for a binop exp AST node */
+	/*************************************************/
 	public void printMe()
 	{
 		/*************************************/
-		/* AST NODE TYPE = AST WHILE STMT */
+		/* AST NODE TYPE = AST FUNC DEC */
 		/*************************************/
-		System.out.print("AST NODE WHILE STMT\n");
+		System.out.print("AST NODE ARRAY TYPE DEF\n");
 
 		/**************************************/
-		/* RECURSIVELY PRINT statements ... */
+		/* RECURSIVELY PRINT type ... */
 		/**************************************/
-		cond.printMe();
-		body.printMe();
-
+        type.printMe();
+		
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
         AstGraphviz.getInstance().logNode(
                 serialNumber,
-            "WHILE_STMT");
+            String.format("ARRAY_DEF(%s)",type.type));
 
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AstGraphviz.getInstance().logEdge(serialNumber,cond.serialNumber);
-		AstGraphviz.getInstance().logEdge(serialNumber,body.serialNumber);
-
+		AstGraphviz.getInstance().logEdge(serialNumber,type.serialNumber);
 	}
 }
