@@ -103,7 +103,7 @@ COMMENT2_CHAR    = [A-Za-z0-9()\[\]\{\}\?\!\+\-\*/\.; \t\n]
   "/*" { yybegin(COMMENT2); }
 
 "if"				{ return symbol(TokenNames.IF);}
-"extendes"			{ return symbol(TokenNames.EXTENDS);}
+"extends"			{ return symbol(TokenNames.EXTENDS);}
 "class"				{ return symbol(TokenNames.CLASS);}
 "int"				{ return symbol(TokenNames.TYPE_INT);}
 "string"			{ return symbol(TokenNames.TYPE_STRING);}
