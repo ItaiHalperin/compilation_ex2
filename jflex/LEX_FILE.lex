@@ -102,6 +102,7 @@ ID				= [a-zA-Z]+
 "void"				{ return symbol(TokenNames.TYPE_VOID);}
 "array"				{ return symbol(TokenNames.ARRAY);}
 "return"			{ return symbol(TokenNames.RETURNN);}
+"while"				{ return symbol(TokenNames.WHILE);}
 "="					{ return symbol(TokenNames.EQ);}
 "."					{ return symbol(TokenNames.DOT);}
 "+"					{ return symbol(TokenNames.PLUS);}

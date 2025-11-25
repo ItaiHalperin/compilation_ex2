@@ -164,7 +164,7 @@ type  		::= 	TYPE_INT:t			{: RESULT = new AstType("int", tleft); :}
 
 varDec		::= 	type:t ID:i ASSIGN exp:e SEMICOLON	{: RESULT = new AstVarDec(t,i,e,tleft); :}
 					| type:t ID:i ASSIGN newExp:e SEMICOLON	{: RESULT = new AstVarDec(t,i,e,tleft); :}
-					| type:t ID:i 	{: RESULT = new AstVarDec(t, i, null, tleft); :}
+					| type:t ID:i SEMICOLON	{: RESULT = new AstVarDec(t, i, null, tleft); :}
 					;
 
 funcDec		::=		type:t ID:i LPAREN typeNameList:l RPAREN LBRACE stmtList:body RBRACE
@@ -225,7 +225,7 @@ exp			::=		INT:i								{: RESULT = new AstExpInt(i, ileft);          :}
 					;
 
 newExp 		::= 	NEW type:t 							{: RESULT = new AstNewExp(t, null, tleft);	:}
-					| NEW type:t LBRACE exp:e RBRACE	{: RESULT = new AstNewExp(t, e, tleft);	:}
+					| NEW type:t LBRACK exp:e RBRACK	{: RESULT = new AstNewExp(t, e, tleft);	:}
 					;
 
 expList 	::= 	expList:l COMMA exp:e				{: l.add(e); RESULT=l;		:}
