@@ -41,7 +41,7 @@ public class AstStmtCall extends AstStmt{
 		/***************************************/
         AstGraphviz.getInstance().logNode(
                 serialNumber,
-            "CALL_STMT");
+            "CALL\nSTMT");
 
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */

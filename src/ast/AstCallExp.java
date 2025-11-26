@@ -22,7 +22,7 @@ public class AstCallExp extends AstExp{
         if(exp_list != null) {
             message += "expList";
         }
-        message += "RPAREN";
+        message += " RPAREN\n";
         System.out.print(message);
 
         /*******************************/
@@ -46,6 +46,8 @@ public class AstCallExp extends AstExp{
         /* RECURSIVELY PRINT VAR, then FIELD NAME ... */
         /**********************************************/
         if (var != null) var.printMe();
+        if (exp_list != null) exp_list.printMe();
+
         System.out.format("CALL EXP %s\n",id);
 
         /***************************************/
@@ -60,6 +62,5 @@ public class AstCallExp extends AstExp{
         /****************************************/
         if (var != null) AstGraphviz.getInstance().logEdge(serialNumber,var.serialNumber);
         if (exp_list != null) AstGraphviz.getInstance().logEdge(serialNumber,exp_list.serialNumber);
-
     }
 }

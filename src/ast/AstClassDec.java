@@ -57,7 +57,7 @@ public class AstClassDec extends AstDec
         if(parent == null){
             AstGraphviz.getInstance().logNode(
                     serialNumber,
-                String.format("CLASS_DEC(%s)",id));
+                String.format("CLASS\nDEC(%s)",id));
         }
         else {
             AstGraphviz.getInstance().logNode(

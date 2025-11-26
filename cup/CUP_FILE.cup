@@ -128,7 +128,7 @@ precedence left TIMES, DIVIDE;
 /* Level 6: Array Indexing */
 precedence nonassoc LBRACK;
 
-/* Level 7: Function Call (You missed this one!) */
+/* Level 7: Function Call */
 precedence nonassoc LPAREN;
 
 /* Level 8: Field Access (Highest) */

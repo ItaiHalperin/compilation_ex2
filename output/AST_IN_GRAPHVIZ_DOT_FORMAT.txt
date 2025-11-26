@@ -1,0 +1,61 @@
+digraph
+{
+graph [ordering = "out"]
+v0 [label = "TYPE(int)"];
+v1 [label = "SIMPLE
+VAR
+(gbgbgb)"];
+v2 [label = "EXP
+VAR"];
+v2 -> v1;
+v3 [label = "EXP
+LIST
+"];
+v3 -> v2;
+v4 [label = "CALL
+EXP
+...->print"];
+v4 -> v3;
+v5 [label = "SIMPLE
+VAR
+(sh2)"];
+v6 [label = "EXP
+VAR"];
+v6 -> v5;
+v7 [label = "EXP
+LIST
+"];
+v7 -> v6;
+v8 [label = "EXP
+LIST
+"];
+v8 -> v4;
+v8 -> v7;
+v9 [label = "CALL
+EXP
+...->print"];
+v9 -> v8;
+v10 [label = "CALL
+STMT"];
+v10 -> v9;
+v11 [label = "STMT
+LIST
+"];
+v11 -> v10;
+v12 [label = "FUNC_DEC(blha)"];
+v12 -> v0;
+v12 -> v11;
+v13 [label = "C_FIELD"];
+v13 -> v12;
+v14 [label = "C
+FIELD
+LIST
+"];
+v14 -> v13;
+v15 [label = "CLASS
+DEC(Blah)"];
+v15 -> v14;
+v16 [label = "PROGRAM
+"];
+v16 -> v15;
+}

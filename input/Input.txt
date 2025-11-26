@@ -1,3 +1,5 @@
-GIDI := 60;
-AVROOM := 55 + GIDI;
-JACOB.sons[11] := JOSEF;
+class Blah {
+    int blha(){
+        print(print(gbgbgb), sh2);
+    }
+}
