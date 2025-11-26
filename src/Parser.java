@@ -5,6 +5,7 @@
 
 import java_cup.runtime.*;
 import ast.*;
+import java.io.PrintWriter;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -330,6 +331,7 @@ public class Parser extends java_cup.runtime.lr_parser {
 	Symbol s;
 	s = lexer.next_token();
 	//System.out.print(s.sym);
+	//Block for debug - delete later -----------------------------------------
 	System.out.print("[");
 	System.out.print(lexer.getLine());
 	System.out.print(":");
@@ -343,26 +345,29 @@ public class Parser extends java_cup.runtime.lr_parser {
 		System.out.print(" )");
 	}
 	System.out.print("\n");
+	//-------------------------------------------------------------------------
 	return s; 
 
     }
 
 
 	public Lexer lexer;
+	public PrintWriter writer;
 
-	public Parser(Lexer lexer)
+	public Parser(Lexer lexer, PrintWriter writer)
 	{
 		super(lexer);
 		this.lexer = lexer;
+		this.writer = writer;
 	}
 	public void report_error(String message, Object info)
 	{
-		System.out.print("ERROR >> ");		
-		System.out.print("[");
-		System.out.print(lexer.getLine());
-		System.out.print(":");
-		System.out.print(lexer.getTokenStartPosition());
-		System.out.print("] ");		
+		
+	}
+	public void syntax_error(Symbol curr_token){
+		int err_line = curr_token.left +1;
+		writer.print("ERROR(" + err_line + ")");
+		writer.close();
 		System.exit(0);
 	}
 

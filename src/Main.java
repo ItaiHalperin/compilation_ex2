@@ -7,12 +7,17 @@ public class Main
 {
 	static public void main(String argv[])
 	{
+		if (argv.length != 2) {
+			System.err.println("Usage: java Main <input file> <output file>");
+			System.exit(1);
+		}
+
 		Lexer l;
 		Parser p;
 		Symbol s;
 		AstProgram ast;
 		FileReader fileReader;
-		PrintWriter fileWriter;
+		PrintWriter fileWriter = null;
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
 		
@@ -27,7 +32,7 @@ public class Main
 			/* [2] Initialize a file writer */
 			/********************************/
 			fileWriter = new PrintWriter(outputFileName);
-			
+
 			/******************************/
 			/* [3] Initialize a new lexer */
 			/******************************/
@@ -36,18 +41,24 @@ public class Main
 			/*******************************/
 			/* [4] Initialize a new parser */
 			/*******************************/
-			p = new Parser(l);
+			p = new Parser(l, fileWriter);
 
 			/***********************************/
 			/* [5] 3 ... 2 ... 1 ... Parse !!! */
 			/***********************************/
 			ast = (AstProgram) p.parse().value;
+
+			/*************************/
+			/* [6] Write Ok msg... */
+			/*************************/
+			fileWriter.write("OK");
 			
 			/*************************/
-			/* [6] Print the AST ... */
+			/* [6.5] Print the AST ... */
 			/*************************/
 			ast.printMe();
-			
+
+
 			/*************************/
 			/* [7] Close output file */
 			/*************************/
@@ -57,11 +68,17 @@ public class Main
 			/* [8] Finalize AST GRAPHIZ DOT file */
 			/*************************************/
 			AstGraphviz.getInstance().finalizeFile();
-    	}
-			     
+		}
+				 
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+		finally {
+
+			if (fileWriter != null) {
+				fileWriter.close();
+			}
 		}
 	}
 }
