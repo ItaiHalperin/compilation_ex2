@@ -13,6 +13,8 @@ public class AstStmtList extends AstNode
 	/******************/
 	public AstStmtList(AstStmt head, AstStmtList tail, int line_number)
 	{
+		super(line_number);
+
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -29,7 +31,6 @@ public class AstStmtList extends AstNode
 		/*******************************/
 		this.head = head;
 		this.tail = tail;
-		super(line_number);
 	}
 
 	/******************************************************/

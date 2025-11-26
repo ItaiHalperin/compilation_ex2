@@ -1,11 +1,13 @@
+package ast;
 public class AstStmtCall extends AstStmt{
     public AstCallExp c;
 
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AstStmtIf(AstCallExp c, int line_number)
+	public AstStmtCall(AstCallExp c, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -19,8 +21,7 @@ public class AstStmtCall extends AstStmt{
 		/*******************************/
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
-		this.c = c
-		super(line_number);
+		this.c = c;
 
 	}
 	public void printMe()

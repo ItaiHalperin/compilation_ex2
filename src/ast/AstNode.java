@@ -11,7 +11,7 @@ public abstract class AstNode
 	public int line_number;
 	public AstNode(int line_number)
 	{
-		this.line_number = line_number
+		this.line_number = line_number;
 	}
 	/***********************************************/
 	/* The default message for an unknown AST node */

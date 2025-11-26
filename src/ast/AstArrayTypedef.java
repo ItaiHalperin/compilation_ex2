@@ -9,6 +9,7 @@ public class AstArrayTypedef extends AstDec
 	/******************/
 	public AstArrayTypedef(AstType type, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -24,7 +25,6 @@ public class AstArrayTypedef extends AstDec
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
         this.type = type;
-        super(line_number);
 	}
 	
 	/*************************************************/

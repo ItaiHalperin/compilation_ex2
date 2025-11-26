@@ -10,6 +10,7 @@ public class AstStmtWhile extends AstStmt
 	/*******************/
 	public AstStmtWhile(AstExp cond, AstStmtList body, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -26,7 +27,6 @@ public class AstStmtWhile extends AstStmt
 		/*******************************/
 		this.cond = cond;
 		this.body = body;
-		super(line_number);
 	}
 	public void printMe()
 	{

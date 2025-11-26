@@ -11,6 +11,7 @@ public class AstFuncDec extends AstDec
 	/******************/
 	public AstFuncDec(AstType type, String id, AstParamList parameters, AstStmtList statements, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -30,10 +31,9 @@ public class AstFuncDec extends AstDec
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
         this.type = type;
-		this.id = left;
+		this.id = id;
 		this.parameters = parameters;
 		this.statements = statements;
-        super(line_number);
 	}
 	
 	/*************************************************/
@@ -50,7 +50,7 @@ public class AstFuncDec extends AstDec
 		/* RECURSIVELY PRINT type + id + type + parameters + statements ... */
 		/**************************************/
         type.printMe();
-		if (parameters != null) pramaters.printMe();
+		if (parameters != null) parameters.printMe();
 		statements.printMe();
 		
 		/***************************************/
@@ -64,7 +64,7 @@ public class AstFuncDec extends AstDec
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
 		AstGraphviz.getInstance().logEdge(serialNumber,type.serialNumber);
-		if (paramaters  != null) AstGraphviz.getInstance().logEdge(serialNumber,parameters.serialNumber);
+		if (parameters  != null) AstGraphviz.getInstance().logEdge(serialNumber,parameters.serialNumber);
 		AstGraphviz.getInstance().logEdge(serialNumber,statements.serialNumber);
 	}
 }

@@ -11,6 +11,8 @@ public class AstStmtIf extends AstStmt
 	/*******************/
 	public AstStmtIf(AstExp cond, AstStmtList body, AstStmtElse e, int line_number)
 	{
+		super(line_number);
+
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -32,8 +34,7 @@ public class AstStmtIf extends AstStmt
 		/*******************************/
 		this.cond = cond;
 		this.body = body;
-		this.e = e
-		super(line_number);
+		this.e = e;
 
 	}
 	public void printMe()

@@ -1,3 +1,5 @@
+package ast;
+
 public class AstStmtReturn extends AstStmt{
     /***************/
 	/*  var := exp */
@@ -9,6 +11,8 @@ public class AstStmtReturn extends AstStmt{
 	/*******************/
 	public AstStmtReturn(AstExp exp, int line_number)
 	{
+		super(line_number);
+
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -29,7 +33,6 @@ public class AstStmtReturn extends AstStmt{
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
 		this.exp = exp;
-        super(line_number);
 	}
 
 	/*********************************************************/

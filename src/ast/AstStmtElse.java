@@ -9,6 +9,7 @@ public class AstStmtElse extends AstStmt
 	/******************/
 	public AstStmtElse(AstStmtList statements, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -25,7 +26,6 @@ public class AstStmtElse extends AstStmt
 		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
 		this.statements = statements;
-        super(line_number);
 	}
 	
 	/*************************************************/

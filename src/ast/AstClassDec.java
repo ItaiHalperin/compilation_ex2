@@ -10,9 +10,10 @@ public class AstClassDec extends AstDec
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstClassDec(String id, String parent, AstCFieldList c_fields, AstStmtList statements, int line_number)
+	public AstClassDec(String id, String parent, AstCFieldList c_fields, int line_number)
 	{
-		/******************************/
+        super(line_number);
+        /******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		serialNumber = AstNodeSerialNumber.getFresh();
@@ -33,8 +34,6 @@ public class AstClassDec extends AstDec
         this.id = id;
 		this.parent = parent;
 		this.c_fields = c_fields;
-		this.statements = statements;
-        super(line_number);
 	}
 	
 	/*************************************************/
@@ -51,8 +50,7 @@ public class AstClassDec extends AstDec
 		/* RECURSIVELY PRINT c_fields + statements ... */
 		/**************************************/
         c_fields.printMe();
-		statements.printMe();
-		
+
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
@@ -70,6 +68,5 @@ public class AstClassDec extends AstDec
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
 		AstGraphviz.getInstance().logEdge(serialNumber,c_fields.serialNumber);
-		AstGraphviz.getInstance().logEdge(serialNumber,statements.serialNumber);
 	}
 }

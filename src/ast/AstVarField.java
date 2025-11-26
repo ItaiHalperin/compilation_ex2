@@ -8,8 +8,9 @@ public class AstVarField extends AstVar
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstVarField(AstVar var, String fieldName)
+	public AstVarField(AstVar var, String fieldName, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/

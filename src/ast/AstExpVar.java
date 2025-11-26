@@ -7,9 +7,10 @@ public class AstExpVar extends AstExp
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstExpVar(AstVar var)
+	public AstExpVar(AstVar var, int line_number)
 	{
-		/******************************/
+        super(line_number);
+        /******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		serialNumber = AstNodeSerialNumber.getFresh();

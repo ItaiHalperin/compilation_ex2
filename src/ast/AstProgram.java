@@ -10,6 +10,7 @@ public class AstProgram extends AstNode
 	/******************/
 	public AstProgram(AstDec dec, AstProgram program, int line_number)
 	{
+		super(line_number);
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
@@ -30,7 +31,6 @@ public class AstProgram extends AstNode
 		/*******************************/
 		this.dec = dec;
         this.program = program;
-        super(line_number);
 	}
 
 	/************************************************/
